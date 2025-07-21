@@ -2,21 +2,27 @@ class Solution {
 public:
     vector<int> findMissingAndRepeatedValues(vector<vector<int>>& grid) {
         int n = grid.size();
-        unordered_map<int, int> mp;
+        long long sum = 0, sq_sum = 0;
 
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                mp[grid[i][j]]++;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                sum += grid[i][j];
+                sq_sum += 1LL * grid[i][j] * grid[i][j];
             }
         }
 
-        int repeated = -1, missing = -1;
+        long long num = n * n;
+        long long cal_sum = num * (num + 1) / 2;
+        long long cal_sq_sum = num * (num + 1) * (2 * num + 1) / 6;
 
-        for (int i = 1; i <= n * n; ++i) {
-            if (mp[i] == 2) repeated = i;
-            if (mp[i] == 0) missing = i;
-        }
+        long long value1 = cal_sum - sum;             // M - R
+        long long value2 = cal_sq_sum - sq_sum;       // M^2 - R^2
 
-        return {repeated, missing};
+        long long M_plus_R = value2 / value1;         // M + R
+
+        long long missing = (value1 + M_plus_R) / 2;
+        long long repeating = missing - value1;
+
+        return {(int)repeating, (int)missing};
     }
 };
