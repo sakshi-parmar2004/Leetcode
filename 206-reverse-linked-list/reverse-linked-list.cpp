@@ -28,15 +28,7 @@ public:
         ListNode* prev = NULL;
         ListNode* fast = head;
         return solve(NULL  , head, head);
-        while(temp)
-        {
-            
-            fast=temp->next;
-            temp->next=prev;
-            prev=temp;
-            temp=fast;
-        }
-        return prev;
+        
         
     }
 };
