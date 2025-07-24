@@ -10,11 +10,24 @@
  */
 class Solution {
 public:
+    ListNode* solve(ListNode* prev , ListNode* temp , ListNode* fast)
+    {
+        if(temp==NULL)
+        {
+            return prev;
+        }
+
+        fast=temp->next;
+        temp->next=prev;
+        
+        return solve(temp,fast,fast);
+
+    }
     ListNode* reverseList(ListNode* head) {
         ListNode* temp=head;
         ListNode* prev = NULL;
         ListNode* fast = head;
-
+        return solve(NULL  , head, head);
         while(temp)
         {
             
