@@ -1,24 +1,19 @@
 class Solution {
 public:
     string removeDigit(string number, char digit) {
-       string ans="",maxi="";
-        for(int i=0;i<number.size();i++)
-        {
-            string str =number;
-            if(number[i]==digit)
-            {
-                str.erase(i,1);
-              
-               if(str>maxi)
-               {
-                maxi= str;
-
-               }
-
-
-
+        int idx = -1;
+        for (int i = 0; i < number.size(); i++) {
+            if (number[i] == digit) {
+                idx = i; // track last occurrence
+                if (i + 1 < number.size() && number[i + 1] > digit) {
+                    // Best place to remove
+                    number.erase(i, 1);
+                    return number;
+                }
             }
         }
-    return maxi;  
+      
+        number.erase(idx, 1);
+        return number;
     }
 };
