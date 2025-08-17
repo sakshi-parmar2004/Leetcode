@@ -2,30 +2,18 @@ class Solution {
 public:
     int minOperations(vector<int>& nums, vector<int>& numsDivide) {
         sort(nums.begin(),nums.end());
-        int mini=INT_MAX;
+        int mini= numsDivide[0];
         int size = numsDivide.size();
-        for(int i:numsDivide)
+        for(int i=1;i<size;i++)
         {
-            mini=min(mini,i);
+            mini=gcd(mini,numsDivide[i]);
         }
         for(int i=0;i<nums.size();i++)
         {
-            bool flag= true;
-            int ele =  nums[i];
-            if(ele>mini)
-            {
-                break;
-            }
-            for(int j=0;j<=size/2;j++)
-            {
-                if(numsDivide[j]%ele!=0 || numsDivide[size-j-1]%ele!=0)
-                {
-                   flag=false;
-                   break;
-                }
-            }
-            if(flag)
-            {return i;}
+           if(mini%nums[i]==0)
+           {
+            return i;
+           }
         }
         return -1;
 
