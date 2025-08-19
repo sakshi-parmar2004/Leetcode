@@ -1,19 +1,22 @@
 class Solution {
 public:
     long long zeroFilledSubarray(vector<int>& nums) {
-        long long ans=0,count=0;
-        for(int i=0;i<nums.size();i++)
+
+        long long n = nums.size(),i=0,j=0,ans=0;
+        while(j<n)
         {
-            if(nums[i]==0)
+            if(nums[j]==0)
             {
-                count++;
-                ans+=count;
+                i=j;
+                while(j<n && nums[j]==0)
+                {
+                    ans+=(j-i+1);
+                    j++;
+                }
             }
-            else{
-                count=0;
-            }
+            j++;
+
         }
         return ans;
-        
     }
 };
