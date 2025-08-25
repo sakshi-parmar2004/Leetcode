@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<vector<int>> diagonalSort(vector<vector<int>>& mat) {
-        map<int,vector<int>>mp;
+        unordered_map<int,vector<int>>mp;
        
         int row = mat.size() , col= mat[0].size();
          vector<vector<int>>ans(row, vector<int>(col));
