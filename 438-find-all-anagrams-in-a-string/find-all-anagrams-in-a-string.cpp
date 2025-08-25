@@ -1,31 +1,47 @@
 class Solution {
 public:
     vector<int> findAnagrams(string s, string p) {
-        int n = s.size(), m = p.size();
-        if (m > n) return {};
-        
-        vector<int> ans;
-        vector<int> freqP(26, 0), freqS(26, 0);
-
-        // build frequency of p
-        for (char c : p) {
-            freqP[c - 'a']++;
+        int len= p.length() , n= s.length(),j=0,i=0;
+        unordered_map<char,int>mp;
+        for(char i:p)
+        {
+            mp[i]++;
         }
-
-        int i = 0;
-        for (int j = 0; j < n; j++) {
-            freqS[s[j] - 'a']++;
-
-            if (j - i + 1 > m) {
-                freqS[s[i] - 'a']--;
+        int count=mp.size();
+        vector<int>ans;
+        while(j<n)
+        {
+            if(mp.find(s[j])!=mp.end())
+            {
+                mp[s[j]]--;
+                if(mp[s[j]]==0)
+            {
+                count--;
+            }
+            }
+            
+            
+            
+            if(j-i+1==len)
+            {
+                if(count==0)
+                {
+                    ans.push_back(i);
+                }
+                if(mp.find(s[i])!=mp.end())
+                {
+                    mp[s[i]]++;
+                    if(mp[s[i]]==1)
+                    {
+                        count++;
+                    }
+                }
                 i++;
             }
-
-            if (freqS == freqP) {
-                ans.push_back(i);
-            }
+            j++;
+            
         }
         return ans;
+        
     }
 };
-
