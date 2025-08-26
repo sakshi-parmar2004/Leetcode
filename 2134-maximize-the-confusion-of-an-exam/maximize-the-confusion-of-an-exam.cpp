@@ -9,7 +9,7 @@ public:
                 t++;
             }
 
-            if(t<=k || j-i+1-t<=k)
+            if(min(j-i+1-t,t)<=k )
             {
                 ans=max(ans,j-i+1);
             }
