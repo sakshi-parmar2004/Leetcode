@@ -1,25 +1,14 @@
 class Solution {
 public:
     int minFlips(int a, int b, int c) {
-        int count = 0;
-        while (a > 0 || b > 0 || c > 0) {
-            int bit1 = a & 1;   // last bit of a
-            int bit2 = b & 1;   // last bit of b
-            int data = c & 1;   // last bit of c
+        // bits where (a|b) != c → need at least 1 flip
+        int temp2 = (a | b) ^ c;
 
-            if ((bit1 | bit2) != data) {
-                if (data == 1) {
-                    count += 1; // need one flip to make OR = 1
-                } else {
-                    count += bit1 + bit2; // flip both if needed
-                }
-            }
+        // bits where both a and b are 1, but c is 0 → need +1 extra flip
+        int temp3 = (a & b) & temp2;
 
-            // move to next bit
-            a >>= 1;
-            b >>= 1;
-            c >>= 1;
-        }
-        return count;
+        // count flips
+        int ans = __builtin_popcount(temp2) + __builtin_popcount(temp3);
+        return ans;
     }
 };
