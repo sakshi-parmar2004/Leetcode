@@ -2,11 +2,16 @@ class Solution {
 public:
     int m,n;
    vector<vector<int>>arr;
+   int dp[501][501][4][3][2];
    int solve(int i,int j,int dir,int value,bool turn)
         {
             if(i<0 || j<0 || i>=m || j>=n || arr[i][j]!=value)
             {
                 return 0;
+            }
+            if(dp[i][j][dir][value][turn]!=-1)
+            {
+                return dp[i][j][dir][value][turn];
             }
            int ans=0;
             //option1 direction is towards to bottom right
@@ -46,15 +51,16 @@ public:
                    }
             }
 
-            return ans;
+            return dp[i][j][dir][value][turn]= ans;
 
 
         }
     int lenOfVDiagonal(vector<vector<int>>& grid) {
         m=grid.size(),n=grid[0].size();
         arr=grid;
+        memset(dp , -1 ,sizeof(dp));
         int ans=0;
-        for(int i=0;i<m;i++)
+         for(int i=0;i<m;i++)
         {
             for(int j=0;j<n;j++)
             {
