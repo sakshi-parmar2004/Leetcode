@@ -2,8 +2,8 @@ class Solution {
 public:
     int m,n;
     int MOD= 1e9+7;
-    int dp[501][501][3];
-    int solve(int i,int j,int dir, vector<vector<int>>& grid)
+    // int dp[501][501][3];
+    int solve(int i,int j,int dir, vector<vector<int>>& grid , vector<vector<vector<int>>>&dp)
     {
         if(i>=m || j>=n)
         {
@@ -17,24 +17,25 @@ public:
         int ans =0;
         if(grid[i][j]==0)
         {
-           ans+=solve(i+1,j,2,grid)+solve(i,j+1,1,grid);
+           ans+=solve(i+1,j,2,grid,dp)+solve(i,j+1,1,grid ,dp);
         }
         // if the direction was right to it will be turned down and the direction wil become 2
         else if(dir==1)
         {
-            ans += solve(i+1,j,2,grid);
+            ans += solve(i+1,j,2,grid, dp);
         }
          // if the direction was down to it will be turned right and the direction wil become 1
         else
         {
-            ans += solve(i,j+1,1,grid);
+            ans += solve(i,j+1,1,grid,dp);
         }
         return dp[i][j][dir]= ans % MOD;
     }
     int uniquePaths(vector<vector<int>>& grid) {
         m=grid.size(),n=grid[0].size();
-        memset(dp,-1, sizeof(dp));
-        return solve(0,0,0,grid);
+        // memset(dp,-1, sizeof(dp));
+        vector<vector<vector<int>>>dp(m ,vector<vector<int>>(n,vector<int>(3,-1)));
+        return solve(0,0,0,grid,dp);
         
     }
 };
