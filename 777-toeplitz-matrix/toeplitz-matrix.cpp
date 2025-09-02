@@ -1,18 +1,30 @@
 class Solution {
 public:
     bool isToeplitzMatrix(vector<vector<int>>& matrix) {
-        unordered_map<int,int>mp;
-        for(int i=0;i<matrix.size();i++)
-        {
-            for(int j=0;j<matrix[0].size();j++)
-            {
-                if(mp.find(i-j)!=mp.end() &&  mp[i-j]!=matrix[i][j])
-                {
-                       return false;  
-                }
-                mp[i-j]=matrix[i][j];
+        int m = matrix.size(), n = matrix[0].size();
+
+        // Start from first row
+        for (int j = 0; j < n; j++) {
+            int val = matrix[0][j];
+            int a = 1, b = j + 1;
+            while (a < m && b < n) {
+                if (matrix[a][b] != val) return false;
+                a++;
+                b++;
             }
         }
+
+        // Start from first column (skip (0,0) since already checked)
+        for (int i = 1; i < m; i++) {
+            int val = matrix[i][0];
+            int a = i + 1, b = 1;
+            while (a < m && b < n) {
+                if (matrix[a][b] != val) return false;
+                a++;
+                b++;
+            }
+        }
+
         return true;
     }
 };
