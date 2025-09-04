@@ -11,38 +11,24 @@
  */
 class Solution {
 public:
-    vector<int> rightSideView(TreeNode* root) {
-        if(!root)return {};
-        vector<int>ans;
-        queue<TreeNode*>q;
-        q.push(root);
-        q.push(NULL);
-        int data;
-        while(!q.empty())
+    void solve(TreeNode* root,vector<int>&ans,int level)
+    {
+        if(!root)return ;
+        if(ans.size()==level)
         {
-            TreeNode* top = q.front();
-            q.pop();
-            if(!top)
-            {
-                ans.push_back(data);
-                if (!q.empty()) {
-                    q.push(NULL);  // only add marker if more nodes exist
-                }
-            }
-            else
-            {
-                data= top->val;
-                if(top->left)
-                {
-                    q.push(top->left);
-                }
-                if(top->right)
-                {
-                    q.push(top->right);
-                }
-            }
-
+            ans.push_back(root->val);
         }
+        solve(root->right, ans, level+1);
+        solve(root->left , ans, level+1);
+
+
+
+    }
+    vector<int> rightSideView(TreeNode* root) {
+    
+       vector<int>ans;
+        solve(root,ans,0);
         return ans;
+        
     }
 };
