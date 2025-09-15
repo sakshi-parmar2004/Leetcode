@@ -1,31 +1,30 @@
 class Solution {
 public:
     int canBeTypedWords(string text, string str) {
-        bool flag=false;
+        vector<int>arr(26,0);
+        for(char i:str)
+        {
+            arr[i-'a']++;
+        }
+         
         int count=0;
-        for(char i:text)
-       {
-            if(i==' ')
-             {
-                if(!flag)
-                {
-                    count++;
-                }
-                flag=false;
+        bool flag=false;
+        for(char ch:text)
+        {
+            if(ch == ' ')
+        {
+            if(!flag)count++;
+            flag=false;
+            continue;
 
-             }
-       if (str.find(i) != std::string::npos)
-{
-    flag = true;
-}
-
-
-      
-       }
-       if(!flag)
-{
-    count++;
-}
-        return count;
+        }
+            if(arr[ch-'a']==1)
+            {
+                flag=true;
+            }
+            
+        }
+         if(!flag)count++;
+         return count;
     }
 };
