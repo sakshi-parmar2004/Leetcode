@@ -2,17 +2,7 @@ class Solution {
 public:
     int evenNumberBitwiseORs(vector<int>& nums) {
         int ans=0,i=0;
-       while(i<nums.size())
-        {
-            if(nums[i]%2==0)
-            {
-                ans=nums[i];
-                break;
-            }
-            i++;
-            
-        }
-        i+=1;
+      
         while(i<nums.size())
         {
             if(nums[i]%2==0)
