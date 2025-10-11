@@ -1,5 +1,4 @@
-#include <bits/stdc++.h>
-using namespace std;
+
 
 class Solution {
 public:
@@ -11,10 +10,10 @@ public:
         long long skip = solve(i + 1, power, dp, mp);
 
         // Option 2: take and skip all numbers within diff <= 2
-        int next_index = i + 1;
-        while (next_index < power.size() && power[next_index] - power[i] <= 2) {
-            next_index++;
-        }
+        int next_index = lower_bound(power.begin(), power.end(),
+                                    power[i] + 3) -
+                        power.begin();;
+       
 
         long long take = 1LL * power[i] * mp[power[i]] + solve(next_index, power, dp, mp);
 
