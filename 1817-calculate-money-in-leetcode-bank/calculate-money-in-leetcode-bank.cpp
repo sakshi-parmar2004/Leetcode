@@ -2,23 +2,19 @@ class Solution {
 public:
     int totalMoney(int n) {
        
-       int x =n/7;
-       n=n%7;
-       int monday=1 , days=1 ;
-       int ans=0;
-       while(days<=x)
+       int week_days= n/7;
+       int remaining_days= n%7;
+      int total = week_days*28;
+       if(week_days>1)
        {
-          int end_day= monday+6;
-          int sum = end_day*(end_day+1)/2- (monday-1)*(monday)/2;
-          ans+= sum;
-        monday++;
-        days++;
+          total+= ((week_days*(week_days-1))/2)*7;
        }
-       int end_day = monday+ n-1;
-       int sum =  end_day*(end_day+1)/2- (monday-1)*(monday+1-1)/2;
-       return ans+sum;
 
-        
+       int monday= week_days+1;
+       int end_day = monday+ remaining_days-1;
+       int sum =  end_day*(end_day+1)/2- (monday-1)*(monday)/2;
+       return total+sum;
+
         
     }
 };
