@@ -2,24 +2,22 @@ class Solution {
 public:
     long long minimumOperations(vector<int>& nums, vector<int>& target) {
         int n = nums.size();
-        vector<long long> diff(n ,0);
-      
-        for (int i = 0; i < n; i++) {
-            diff[i] =  target[i]-nums[i];
-           
-        }
-        long long ops = abs(diff[0]);
+       
+        long long ops = abs(target[0]-nums[0]);
+        int prev= target[0]-nums[0];
         for(int i=1;i<n;i++)
         {
-            if((diff[i-1]>0 && diff[i]<0) || (diff[i-1]<0 && diff[i]>0))
+            int cur = target[i]-nums[i];
+            if((prev>0 && cur<0) || (prev<0 && cur>0))
             {
-                ops+=(long long) abs(diff[i]);
+                ops+=(long long) abs(cur);
             }
-            else if(abs(diff[i])>abs(diff[i-1]))
+            else if(abs(cur)>abs(prev))
             {
-                ops+=(long long) abs(diff[i]-diff[i-1]);
+                ops+=(long long) abs(cur-prev);
 
             }
+            prev=cur;
 
         }
         return ops;
