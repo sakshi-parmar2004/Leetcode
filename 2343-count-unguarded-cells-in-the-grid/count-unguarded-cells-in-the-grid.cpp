@@ -1,35 +1,39 @@
 class Solution {
 public:
-    void solve(int i,int j,int m , int n,vector<vector<string>>&arr ,set<pair<int,int>>&st,string dir )
+    void solve(int i,int j,int m , int n,vector<vector<string>>&arr ,set<pair<int,int>>&st )
     {
-
-if(i<0 || j<0 || i>=m || j>=n)
-{
-    return ;
-}
-   if(st.find({i,j})!=st.end())
-   {
-    return ;
-   }
-   arr[i][j]="-1";
-
-        if(dir=="d")
+        for(int ind=i+1;ind<m;ind++)
         {
-                solve(i+1,j,m,n,arr,st,"d");
+            if(st.find({ind,j})!=st.end())
+            {
+                break;
+            }
+            arr[ind][j]="-1";
         }
-        else if(dir=="l")
+        for(int ind=j+1;ind<n;ind++)
         {
-               solve(i-1,j,m,n,arr,st,"l");
+            if(st.find({i,ind})!=st.end())
+            {
+                break;
+            }
+            arr[i][ind]="-1";
         }
-        else if(dir=="u")
+         for(int ind=i-1;ind>=0;ind--)
         {
-                solve(i,j-1,m,n,arr,st,"u");
+            if(st.find({ind,j})!=st.end() )
+            {
+                break;
+            }
+            arr[ind][j]="-1";
         }
-        else 
+        for(int ind=j-1;ind>=0;ind--)
         {
-                       solve(i,j+1,m,n,arr,st,"r");
-        }      
-        return ;
+            if(st.find({i,ind})!=st.end())
+            {
+                break;
+            }
+            arr[i][ind]="-1";
+        }
     }
     int countUnguarded(int m, int n, vector<vector<int>>& guards, vector<vector<int>>& walls) {
         vector<vector<string>>arr(m, vector<string>(n));
@@ -45,17 +49,14 @@ if(i<0 || j<0 || i>=m || j>=n)
             int id1 = guards[i][0],id2= guards[i][1];
             arr[id1][id2]="G";
             st.insert({id1,id2});
+            
         }
         for(int i=0;i<guards.size();i++)
         {
             int id1 = guards[i][0],id2= guards[i][1];
-            solve(id1+1,id2,m,n,arr,st,"d");
-            solve(id1-1,id2,m,n,arr,st,"l");
-             solve(id1,id2-1,m,n,arr,st,"u");
-            solve(id1,id2+1,m,n,arr,st,"r");
-
+            
+            solve(id1,id2,m,n,arr,st);
         }
-
         int count=0;
 
         for(int i=0;i<m;i++)
