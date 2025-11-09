@@ -9,13 +9,13 @@ public:
 
         if(num1>num2)
         {
-            return 1+ solve(num1-num2,num2);
+            num1=num1-num2;
         }
         else
         {
-            return 1 + solve(num1,num2-num1);
+           num2=num2-num1;
         }
-        return 0;
+        return 1+solve(num1,num2);
     }
     int countOperations(int num1, int num2) {
         
