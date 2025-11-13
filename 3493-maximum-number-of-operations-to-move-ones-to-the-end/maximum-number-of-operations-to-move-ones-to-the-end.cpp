@@ -25,6 +25,7 @@ public:
             }
 
             i = j; // move i to start of next group
+            j++;
         }
 
         return ans;
