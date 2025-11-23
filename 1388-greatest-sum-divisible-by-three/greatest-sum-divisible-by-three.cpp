@@ -1,54 +1,28 @@
 class Solution {
 public:
-    int maxSumDivThree(vector<int>& nums) {
-        int sum=0;
-        vector<int>arr1,arr2;
-        for(int i:nums)
-        {
-          sum+= i;
-          if(i%3==0)continue;
-          if(i%3==1)
-          {
-            arr1.push_back(i);
-          }
-          else
-          {
-            arr2.push_back(i);
-          }
-        }
-
-        if(sum%3==0)return sum;
-        sort(arr1.begin(),arr1.end());
-        sort(arr2.begin(),arr2.end());
-        if(sum%3==1)
-        {
-            int op1=0,op2=0;
-            if(arr1.size()>0)
-            {
-            op1 = sum-arr1[0];
-            }
-            if(arr2.size()>1)
-            {
-            op2= sum-arr2[0]-arr2[1];
-            }
-           return max(op1,op2);
-        }
     
-        else
-        {
-             int op1=0,op2=0;
-            if(arr1.size()>1)
+    int solve(int i, vector<int>& nums, int rem,vector<vector<int>>&dp) {
+      
+        if (i >= nums.size()){
+            if(rem==0)
             {
-             op1 = sum-arr1[0]-arr1[1];
+                return 0;
             }
-            if(arr2.size()>0)
-            {
-                 op2= sum-arr2[0];
-            }
-           return max(op1,op2);
-
-
-        }
-        return 0;
+            return INT_MIN;
+       }
+       if(dp[i][rem]!=-1)
+       {
+          return dp[i][rem];
+       }
+        int op1=solve(i + 1, nums, rem,dp);
+        int op2=nums[i]+solve(i + 1, nums, (rem + nums[i])%3,dp);
+        return dp[i][rem]= max(op1,op2);
+      
+    }
+    int maxSumDivThree(vector<int>& nums) {
+        int rem = 0;
+        vector<vector<int>>dp(nums.size(),vector<int>(3,-1));
+        return solve(0, nums, rem,dp);
+        
     }
 };
