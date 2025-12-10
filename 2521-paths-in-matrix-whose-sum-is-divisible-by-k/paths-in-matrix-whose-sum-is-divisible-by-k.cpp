@@ -1,35 +1,31 @@
 class Solution {
 public:
     int MOD= 1e9+7;
-    int solve(int i,int j,int sum,vector<vector<int>>& grid, int k, vector<vector<vector<int>>>&dp)
+    int solve(int i,int j,int m,int n ,vector<vector<int>>& nums, int k,int rem,vector<vector<vector<int>>>&dp)
     {
-        if(i>=grid.size() || j>=grid[0].size())
+        if(i>=m || j>=n )
         {
             return 0;
         }
-        
-        if(i==grid.size()-1 && j==grid[0].size()-1)
+        if(i==m-1 && j==n-1)
         {
-            if((sum+grid[i][j]) %k==0)
+            if((rem+nums[i][j])%k==0)
             {
                 return 1;
             }
             return 0;
-           
         }
-        if(dp[i][j][sum]!=-1)
-        {
-            return dp[i][j][sum];
-        }
+        if(dp[i][j][rem]!=-1)return dp[i][j][rem];
 
-        int op1 = solve(i+1,j,(sum+grid[i][j])%k,grid,k,dp);
-        int op2= solve(i,j+1,(sum+grid[i][j])%k,grid,k,dp);
-        return dp[i][j][sum]= (op1+op2)%MOD;
+        int op1= solve(i+1,j,m,n,nums,k,(rem+nums[i][j])%k ,dp);
+        int op2= solve(i,j+1,m,n,nums,k,(rem+nums[i][j])%k ,dp);
+        return dp[i][j][rem] = (op1+op2)%MOD;
     }
-    int numberOfPaths(vector<vector<int>>& grid, int k) {
-        int m= grid.size(),n=grid[0].size();
+    int numberOfPaths(vector<vector<int>>& nums, int k) {
+        int m=nums.size(),n=nums[0].size();
+        // int dp[m][n][k];
+        // memset(dp,-1,sizeof(dp));
         vector<vector<vector<int>>>dp(m,vector<vector<int>>(n,vector<int>(k,-1)));
-
-        return solve(0,0,0,grid,k,dp);
+        return solve(0,0,m,n,nums,k,0,dp);
     }
 };
