@@ -1,50 +1,55 @@
 class Solution {
 public:
-    void solve(int i,vector<int>&parent,vector<bool>&visited,stack<int>&st,unordered_map<int,vector<int>>&adj)
+    void solve(int i,unordered_map<int,vector<int>>&adj_list,vector<int>&parent,stack<int>&st,vector<bool>&visited)
     {
         visited[i]=true;
         st.push(i);
-        for(int j:adj[i])
+        for(int nbr:adj_list[i])
         {
-            if(visited[j])
+            if(visited[nbr])
             {
                 continue;
             }
-            parent[j]=i;
-            solve(j,parent,visited,st,adj);
+           parent[nbr]=i;
+           solve(nbr,adj_list,parent,st,visited);
         }
-        return ;
+       return ;
+        
+
     }
     int maxKDivisibleComponents(int n, vector<vector<int>>& edges, vector<int>& values, int k) {
 
-        stack<int>st;
-        vector<bool>visited(n,false);
+        unordered_map<int,vector<int>>adj_list;
+        vector<long long>sum(values.begin(),values.end());
         vector<int>parent(n);
-        parent[0]=-1;
-        unordered_map<int,vector<int>>adj;
+        vector<bool>visited(n,false);
+        stack<int>st;
         for(auto i:edges)
         {
-            int u=i[0],v=i[1];
-            adj[u].push_back(v);
-            adj[v].push_back(u);
+            int u = i[0],v=i[1];
+            adj_list[u].push_back(v);
+            adj_list[v].push_back(u);
         }
-        solve(0,parent,visited,st,adj);
-        int ans=0;
-        vector<long long>sum(values.begin(),values.end());
-        while(!st.empty())
-        {
-           long long val = st.top();
-           st.pop();
-           if(sum[val]%k==0)
-           {
-            ans++;
-           }
-           else
-           {
-             sum[parent[val]]+= sum[val];
-           }
-        }
-        return ans;
+        int count=0;
+        solve(0,adj_list,parent,st,visited);
+       
+         while(!st.empty())
+         {
+             int node = st.top();
+          if(sum[node]%k==0)
+            {
+                count++;
+            }
+            else
+            {
+                sum[parent[node]]+= sum[node];
+            }
+            st.pop();
+         }
+    
+        
+        return count;
+        
         
     }
 };
