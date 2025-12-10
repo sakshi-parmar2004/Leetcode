@@ -1,26 +1,25 @@
 class Solution {
 public:
     long long maxSubarraySum(vector<int>& nums, int k) {
-        int n=nums.size();
-        vector<long long >prefix_arr(n+1,0);
-        long long res= LONG_MIN,sum=0;
-        prefix_arr[0]=0;
+        int n= nums.size();
+        vector<long long>prefix(n+1,0);
         for(int i=0;i<n;i++)
         {
-           prefix_arr[i+1]=prefix_arr[i]+nums[i];
+            prefix[i+1]=prefix[i]+nums[i];
         }
 
+        long long maxi = LLONG_MIN;
         for(int i=0;i<k;i++)
         {
-            sum=0;
+            long long sum=0;
             for(int j=i;j+k<=n;j+=k)
             {
-                long long data = prefix_arr[j+k]-prefix_arr[j];
-                sum= max(sum+data,data);
-                res= max(res, sum);
+                long long val = prefix[j+k]-prefix[j];
+
+                sum=max(sum+val, val);
+                maxi=max(maxi,sum);
             }
         }
-        return res;
-        
+         return maxi;
     }
-}; 
+};
