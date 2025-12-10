@@ -1,20 +1,17 @@
 class Solution {
 public:
     int smallestRepunitDivByK(int k) {
-        
 
-        if(k%2==0 || k%5==0)return-1;
-        int ans=1;
-        int n= 1%k;
-        while(n>0)
+        int num =0;
+        int count=0;
+        while(num<INT_MAX)
         {
-           n= (n*10+1)%k ;
-           ans++;
-           if(n==0)return ans;
-           if(ans>k)return -1;
+            num=(num*10+ 1)%k;
+            count++;
+            if(num==0)return count;
+            if(count>k)return -1;
         }
-
-
-        return ans;
+        return -1;
+        
     }
 };
