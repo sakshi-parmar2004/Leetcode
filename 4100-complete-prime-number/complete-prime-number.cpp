@@ -2,17 +2,17 @@ class Solution {
 public:
     bool isPrime(int n)
     {
-        if(n==1)return false;
-        if(n==2 || n==3)return true;
-        int range = sqrt(n);
-        for(int i=2;i<range+1;i++)
+        vector<bool>sieve(n+1,true);
+        sieve[0]=false;
+        sieve[1]=false;
+        for(int i=2;i*i<=n;i++)
         {
-            if(n%i==0)
-            {
-                return false;
-            }
+               for(int k=i;k<=n;k+=i)
+               {
+                sieve[k]=false;
+               }
         }
-        return true;
+        return sieve[n];
     }
     bool completePrime(int num) {
         
