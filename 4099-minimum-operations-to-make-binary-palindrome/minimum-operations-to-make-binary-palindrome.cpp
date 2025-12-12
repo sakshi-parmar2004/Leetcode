@@ -1,55 +1,57 @@
 class Solution {
 public:
-    bool pallindromic(string s)
+    int bin_len(int n)
     {
-        int len= s.length()/2;
-        int n= s.length();
-        for(int i=0;i<len;i++)
+        int len=0;
+        while(n>0)
         {
-            if(s[i]!=s[n-1-i])
+            n>>=1;
+            len++;
+        }
+        return len;
+    }
+    bool solve(int i)
+    {
+        int l=0,r= bin_len(i)-1;
+        while(l<r)
+        {
+            if(((i>>l)&1) != ((i>>r)&1))
             {
                 return false;
             }
-
+            l++;r--;
         }
         return true;
+
     }
     vector<int> minOperations(vector<int>& nums) {
-        vector<int> arr ;
-        for(int i=1;i<=5000;i++)
+        
+        vector<bool>pre(5050,false);
+        for(int i=0;i<5050;i++)
         {
-            string bin = std::bitset<32>(i).to_string();
-             bin.erase(0, bin.find('1'));  // remove leading zeros
-             if(pallindromic(bin))
-             {
-                arr.push_back(i);
-             }
+          
+          pre[i]=solve(i);
 
         }
-    
-
-        vector<int> ans(nums.size());
-
-        for (int i = 0; i < nums.size(); i++) {
-            int x = nums[i];
-
-            auto it = lower_bound(arr.begin(), arr.end(), x);
-
-            int best = INT_MAX;
-
-            // candidate 1: smallest >= x
-            if (it != arr.end())
-                best = min(best, abs(x - *it));
-
-            // candidate 2: largest < x
-            if (it != arr.begin()) {
-                int prev = *(it - 1);
-                best = min(best, abs(x - prev));
+        int n = nums.size();
+        vector<int>ans(n,0);
+        for(int i=0;i<nums.size();i++)
+        {
+            int a = nums[i],b= nums[i],count1=0,count2=0;
+            while(a>=0 && !pre[a])
+            {
+                a--;
+                count1++;
+            }
+            while( b<5050 && !pre[b])
+            {
+                b++;
+                count2++;
             }
 
-            ans[i] = best;
-        }
+            ans[i]=min(count1,count2);
+                    }
+return ans;
 
-        return ans;
     }
 };
