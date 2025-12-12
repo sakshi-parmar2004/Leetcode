@@ -27,7 +27,7 @@ public:
     vector<int> minOperations(vector<int>& nums) {
         
         vector<bool>pre(5050,false);
-        for(int i=0;i<5050;i++)
+        for(int i=0;i<5000;i++)
         {
           
           pre[i]=solve(i);
@@ -41,13 +41,19 @@ public:
             while(a>=0 && !pre[a])
             {
                 a--;
+                
                 count1++;
             }
-            while( b<5050 && !pre[b])
+            while( b<5000 && !pre[b])
             {
                 b++;
                 count2++;
             }
+            if(b==5000)
+            {
+                count2=INT_MAX;
+            }
+            cout<<"count1 = "<<count1<<" count2 = "<<count2<<endl;
 
             ans[i]=min(count1,count2);
                     }
