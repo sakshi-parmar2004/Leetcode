@@ -7,16 +7,12 @@ public:
         n=n/2;
         for(int i=0;i<nums.size();i++)
         {
-            if(i+n-1>nums.size())
+            if((i+1<nums.size() && nums[i]==nums[i+1]) || (i+2<nums.size()&&   nums[i]==nums[i+2]))
             {
-                   break;
+                return nums[i];
             }
-            if(nums[i]==nums[i+n-1])
-           {
-            return nums[i];
-           }
 
         }
-        return ans;
+        return 0;
     }
 };
